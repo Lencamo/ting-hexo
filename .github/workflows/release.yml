@@ -1,0 +1,42 @@
+name: release
+
+on:
+  push:
+    branches: main # master 分支提交时触发（触发时机是和传统的脚本部署不同的一点）
+
+jobs:
+  build:
+    # 指定 job任务运行的环境 (必填字段)
+    runs-on: ubuntu-latest
+    steps:
+      - name: 签出代码
+        # 使用action库  actions/checkout获取源码
+        uses: actions/checkout@master
+
+      - name: 安装 nodejs
+        # 使用action库  actions/setup-node安装node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: 安装依赖
+        run: npm install
+
+      - name: 前端打包
+        run: npm run clean && npm run build
+
+      - name: 发布到云服务器
+        uses: easingthemes/ssh-deploy@v2.1.1 # 当然还有其他选择
+        env:
+          # 默认打包的路径
+          SOURCE: 'public/*'
+          # 项目部署的服务器ip地址
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          # 项目要上传到服务器的路径，要服务器上的绝对路径
+          TARGET: '/www/wwwroot/www.example.com/'
+          # scp参数 ========================
+          ARGS: '-avzr --delete'
+          # 服务器登录用户名
+          REMOTE_USER: 'root'
+          # 服务器生成的ssh私钥
+          SSH_PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}

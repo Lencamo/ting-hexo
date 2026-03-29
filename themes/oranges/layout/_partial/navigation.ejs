@@ -1,0 +1,26 @@
+<div class="header">
+  <div class="avatar">
+    <div class="nickname">
+      <span class="line-before"></span>
+      <a href="<%- theme.avatar.path %>"><%- theme.avatar.author_nickname %></a>
+      <span class="line-after"></span>
+    </div>
+  </div>
+  <div class="navbar">
+    <ul>
+      <%
+        for(let item of theme.navbar) {
+          if (item.enable) {
+      %>
+        <li class="nav-item" data-path="<%- item.path %>">
+          <a href="<%- item.path %>"><%- item.name %></a>
+        </li>
+      <%
+          }
+        }
+      %>
+    </ul>
+  </div>
+</div>
+
+<%- js(['/js/activeNav.js']) %>
