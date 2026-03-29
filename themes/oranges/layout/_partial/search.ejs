@@ -1,4 +1,6 @@
 <% if (theme.search.enable) { %>
+  <% const defaultLanguage = oranges_default_language(); %>
+  <% const searchPlaceholder = theme.search.placeholder || oranges_translate('search', defaultLanguage); %>
   <div class="search-icon tools-bar-item" id="search-icon">
     <a href="javascript: void(0)">
       <i class="iconfont icon-search"></i>
@@ -13,11 +15,14 @@
             <i class="iconfont icon-search"></i>
           </a>
         </span>
-        <% if (theme.search.placeholder) { %>
-          <input type="text" class="search-input" id="search-input" placeholder="<%- theme.search.placeholder %>">
-        <% } else { %>
-          <input type="text" class="search-input" id="search-input" placeholder="<%= __('search') %>">
-        <% } %>
+        <input
+          type="text"
+          class="search-input"
+          id="search-input"
+          placeholder="<%- oranges_localize(searchPlaceholder, defaultLanguage) %>"
+          data-l10n="<%- oranges_localize_attr_json(searchPlaceholder) %>"
+          data-l10n-attr="placeholder"
+        >
         <span class="search-close-icon" id="search-close-icon">
           <a href="javascript: void(0)">
             <i class="iconfont icon-close"></i>
@@ -65,11 +70,17 @@
     document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
     searchOverlayArea.addEventListener("click", blurSearchContent, false)
 
+    function getThemeText(key) {
+      const lang = document.documentElement.getAttribute('ui-lang') || window.__ORANGES_DEFAULT_LANGUAGE__
+      const values = (window.__ORANGES_I18N__ || {})[key] || {}
+      return values[lang] || values[window.__ORANGES_DEFAULT_LANGUAGE__] || key
+    }
+
     var searchFunc = function (path, search_id, content_id) {
       'use strict';
       var $input = document.getElementById(search_id);
       var $resultContent = document.getElementById(content_id);
-      $resultContent.innerHTML = "<ul><span class='local-search-empty'><%= __('searchFirst') %><span></ul>";
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>" + getThemeText('searchFirst') + "<span></ul>";
       $.ajax({
         // 0x01. load xml file
         url: path,
@@ -98,7 +109,7 @@
               var isMatch = true;
               var content_index = [];
               if (!data.title || data.title.trim() === '') {
-                data.title = "Untitled";
+                data.title = getThemeText('untitled');
               }
               var orig_data_title = data.title.trim();
               var data_title = orig_data_title.toLowerCase();
@@ -165,7 +176,7 @@
             });
             str += "</ul>";
             if (str.indexOf('<li>') === -1) {
-              return $resultContent.innerHTML = "<ul><span class='local-search-empty'><%= __('searchNoResult') %><span></ul>";
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>" + getThemeText('searchNoResult') + "<span></ul>";
             }
             $resultContent.innerHTML = str;
           });
@@ -173,9 +184,9 @@
         error: function(xhr, status, error) {
           $resultContent.innerHTML = ""
           if (xhr.status === 404) {
-            $resultContent.innerHTML = "<ul><span class='local-search-empty'><%= __('searchFilesNotfound') %><a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>" + getThemeText('searchFilesNotfound') + " <a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>" + getThemeText('configuration') + "</a><span></ul>";
           } else {
-            $resultContent.innerHTML = "<ul><span class='local-search-empty'><%= __('searchServiceErrors') %><span></ul>";
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>" + getThemeText('searchServiceErrors') + "<span></ul>";
           }
         }
       });

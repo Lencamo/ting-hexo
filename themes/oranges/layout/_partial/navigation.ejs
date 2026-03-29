@@ -1,8 +1,14 @@
 <div class="header">
+  <% const defaultLanguage = oranges_default_language(); %>
   <div class="avatar">
     <div class="nickname">
       <span class="line-before"></span>
-      <a href="<%- theme.avatar.path %>"><%- theme.avatar.author_nickname %></a>
+      <a
+        href="<%- theme.avatar.path %>"
+        data-l10n="<%- oranges_localize_attr_json(theme.avatar.author_nickname) %>"
+      >
+        <%- oranges_localize(theme.avatar.author_nickname, defaultLanguage) %>
+      </a>
       <span class="line-after"></span>
     </div>
   </div>
@@ -11,9 +17,18 @@
       <%
         for(let item of theme.navbar) {
           if (item.enable) {
+            const i18nKey = item.i18nKey || item.key;
+            const navName = i18nKey
+              ? oranges_translate(i18nKey, defaultLanguage)
+              : oranges_localize(item.name, defaultLanguage);
       %>
         <li class="nav-item" data-path="<%- item.path %>">
-          <a href="<%- item.path %>"><%- item.name %></a>
+          <a
+            href="<%- item.path %>"
+            <% if (i18nKey) { %>data-i18n-key="<%- i18nKey %>"<% } else { %>data-l10n="<%- oranges_localize_attr_json(item.name) %>"<% } %>
+          >
+            <%- navName %>
+          </a>
         </li>
       <%
           }

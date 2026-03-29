@@ -27,7 +27,9 @@ favicon:
 # 用户头像与昵称
 avatar:
   author_photo: /images/avatar.png
-  author_nickname: 示例内容站
+  author_nickname:
+    en: Demo Content Site
+    zh-CN: 示例内容站
   path: /
 
 # Google 分析
@@ -193,7 +195,19 @@ footer:
 # 文章搜索
 search:
   enable: true
-  placeholder: 搜索示例文章
+  placeholder:
+    en: Search posts
+    zh-CN: 搜索文章
+
+# 中英文切换
+languageSwitch:
+  enable: true
+  default: en
+  languages:
+    - code: en
+      label: EN
+    - code: zh-CN
+      label: 中
 
 # 深/浅配色切换
 colorSwitch:

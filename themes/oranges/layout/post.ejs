@@ -1,5 +1,6 @@
 <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
 <!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+<% const defaultLanguage = oranges_default_language(); %>
 
 <% if (theme.mathjax && theme.mathjax.enable){ %>
   <%- partial('_partial/mathjax') %>
@@ -33,12 +34,12 @@
     <div class="friend-list">
       <% for(let friend of theme.friends) { %>
         <div class="friend-list-item">
-          <span class="nickname">@ <%- friend.nickname %></span>
+          <span class="nickname">@ <span data-l10n="<%- oranges_localize_attr_json(friend.nickname) %>"><%- oranges_localize(friend.nickname, defaultLanguage) %></span></span>
           <a href="<%- friend.site %>" target="_blank">
             <span class="site-path"><%- friend.site %></span>
           </a>
-          <p class="card-meta">
-            <%- friend.meta %>
+          <p class="card-meta" data-l10n="<%- oranges_localize_attr_json(friend.meta) %>">
+            <%- oranges_localize(friend.meta, defaultLanguage) %>
           </p>
         </div>
       <% } %>
@@ -72,7 +73,7 @@
           if (item.key === 'tags' && item.enable) {
             if(page.tags && page.tags.length > 0) { %>
               <span class="post-tags">
-                <i class="iconfont icon-tags mr-10" title="<%= __('tags') %>"></i>
+                <i class="iconfont icon-tags mr-10" title="<%= oranges_translate('tags', defaultLanguage) %>" data-i18n-key="tags" data-i18n-attr="title"></i>
                 <% for(let item of page.tags.data) { %>
                 <span class="span--tag mr-8">
                   <a href="<%= url_for(item.path)%>" title="<%- item.name %>">
@@ -86,7 +87,7 @@
           if (item.key === 'categories' && item.enable) {
             if(page.tags && page.categories.length > 0) { %>
               <span class="post-categories">
-                <i class="iconfont icon-bookmark" title="<%= __('categories') %>"></i>
+                <i class="iconfont icon-bookmark" title="<%= oranges_translate('categories', defaultLanguage) %>" data-i18n-key="categories" data-i18n-attr="title"></i>
                 <% for(let item of page.categories.data){ %>
                 <span class="span--category">
                   <a href="<%= url_for(item.path)%>" title="<%- item.name %>">
@@ -108,20 +109,20 @@
             <% if(page.next) { %>
               <a href="<%- url_for(page.next.path) %>" target="_self">
                 <i class="iconfont icon-chevronleft"></i>
-                <span><%= __('prev') %></span>
+                <span data-i18n-key="prev"><%= oranges_translate('prev', defaultLanguage) %></span>
               </a>
             <% } %>
           </div>
           <div class="post-attach">
             <span class="post-pubtime">
-              <i class="iconfont icon-updatetime mr-10" title="<%= __('updateTime') %>"></i>
+              <i class="iconfont icon-updatetime mr-10" title="<%= oranges_translate('updateTime', defaultLanguage) %>" data-i18n-key="updateTime" data-i18n-attr="title"></i>
               <%- page.updated.format("YYYY-MM-DD HH:mm:ss") %>
             </span>
           </div>
           <div class="post-foot-prev">
             <% if(page.prev) { %>
               <a href="<%- url_for(page.prev.path) %>" target="_self">
-                <span><%= __('next') %></span>
+                <span data-i18n-key="next"><%= oranges_translate('next', defaultLanguage) %></span>
                 <i class="iconfont icon-chevronright"></i>
               </a>
             <% } %>

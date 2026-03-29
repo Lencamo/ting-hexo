@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="<%= config.language %>" color-mode="dark">
+<html lang="<%= oranges_default_language() %>" color-mode="dark">
 
   <%- partial('_partial/header') %>
 
@@ -16,6 +16,8 @@
         <%- partial('_partial/backtotop') %>
 
         <%- partial('_partial/search') %>
+
+        <%- partial('_partial/language-switch') %>
 
         <%- partial('_partial/colorscheme') %>
 

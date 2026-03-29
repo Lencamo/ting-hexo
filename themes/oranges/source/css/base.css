@@ -8,8 +8,11 @@ body {
   font-size: 10px;
   letter-spacing: 0.01rem;
   background-color: var(--bg-body);
-  transition: color 400ms ease-in-out 0s, background-color 400ms ease-in-out 0s;
-  font-family: Consolas, 'Liberation Mono', Menlo, Monaco, 'Source Han Sans CN', 'PingFang SC',
+  transition:
+    color 400ms ease-in-out 0s,
+    background-color 400ms ease-in-out 0s;
+  font-family:
+    Consolas, 'Liberation Mono', Menlo, Monaco, 'Source Han Sans CN', 'PingFang SC',
     'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
 }
 
@@ -221,7 +224,7 @@ a:hover {
 
 .avatar {
   text-align: center;
-  padding-bottom: 30px;
+  padding-bottom: 10px;
   margin-left: calc(100vw - 100%);
 }
 
@@ -566,7 +569,9 @@ a:hover {
 .search-overlay.hidden {
   background-color: transparent;
   visibility: hidden;
-  transition: visibility 0s linear 0.2s, background-color 0.2s;
+  transition:
+    visibility 0s linear 0.2s,
+    background-color 0.2s;
   padding-right: 0;
 }
 
@@ -584,7 +589,9 @@ a:hover {
   z-index: 999;
   border-radius: 10px;
   margin: 0 2rem;
-  transition: top 0.2s ease, opacity 0.2s ease;
+  transition:
+    top 0.2s ease,
+    opacity 0.2s ease;
   outline: 0;
 }
 
@@ -602,7 +609,9 @@ a:hover {
   border-radius: 10px;
   background-color: var(--bg-content-search);
   padding: 0 8px;
-  box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+  box-shadow:
+    0 1px 2px 0 rgba(60, 64, 67, 0.3),
+    0 1px 3px 1px rgba(60, 64, 67, 0.15);
 }
 
 .search-input {

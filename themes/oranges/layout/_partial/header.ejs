@@ -18,6 +18,8 @@
     <meta name="robots" content="noindex" />
   <% } %>
   <%
+    const defaultLanguage = oranges_default_language();
+    const siteTitle = (theme.avatar && theme.avatar.author_nickname) || config.title;
     var title = page.title;
 
     if (is_archive()){
@@ -40,12 +42,12 @@
   %>
   <title>
     <% if (title) { %>
-      <%= __(title) %> 
+      <%= oranges_translate(title, defaultLanguage) %> 
       <% if (page.tag) { %> : <%= page.tag %><% } %>
       <% if (page.category) { %> : <%= page.category %><% } %>
       |
     <% } %>
-     <%= config.title %>
+     <%= oranges_localize(siteTitle, defaultLanguage) %>
   </title>
 
   <% if (theme.favicon.enable){ %>
@@ -98,8 +100,58 @@
   <% } %>
 
   <script>
+    window.__ORANGES_SITE_TITLE__ = <%- oranges_localize_json(siteTitle) %>
+    window.__ORANGES_DEFAULT_LANGUAGE__ = '<%- oranges_default_language() %>'
+    window.__ORANGES_LANGUAGES__ = <%- oranges_language_options_json() %>
+    window.__ORANGES_I18N__ = <%- oranges_i18n_json([
+      'home',
+      'archives',
+      'tags',
+      'categories',
+      'about',
+      'friend',
+      'friends',
+      'search',
+      'searchFirst',
+      'searchNoResult',
+      'searchFilesNotfound',
+      'searchServiceErrors',
+      'configuration',
+      'catalog',
+      'prev',
+      'next',
+      'updateTime',
+      'pinned',
+      'untitled'
+    ]) %>
+
     var html = document.documentElement
+    const uiLanguage = localStorage.getItem('ui-language-v2') || window.__ORANGES_DEFAULT_LANGUAGE__
+    document.documentElement.setAttribute('ui-lang', uiLanguage)
+    document.documentElement.lang = uiLanguage
     const colorMode = localStorage.getItem('color-mode') || 'dark'
     document.documentElement.setAttribute('color-mode', colorMode)
+
+    function updateSiteTitle(lang) {
+      const siteTitleMap = window.__ORANGES_SITE_TITLE__ || {}
+      const nextSiteTitle = siteTitleMap[lang] || siteTitleMap[window.__ORANGES_DEFAULT_LANGUAGE__] || ''
+
+      if (!nextSiteTitle) return
+
+      const separator = ' | '
+      const index = document.title.lastIndexOf(separator)
+
+      if (index === -1) {
+        document.title = nextSiteTitle
+        return
+      }
+
+      document.title = document.title.slice(0, index + separator.length) + nextSiteTitle
+    }
+
+    updateSiteTitle(uiLanguage)
+    document.addEventListener('oranges:languagechange', function(event) {
+      updateSiteTitle(event.detail.lang)
+    })
   </script>
 </head>

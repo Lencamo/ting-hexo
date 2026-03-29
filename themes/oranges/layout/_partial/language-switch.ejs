@@ -1,0 +1,19 @@
+<% if (theme.languageSwitch && theme.languageSwitch.enable) { %>
+  <div class="tools-bar-item language-switch">
+    <a
+      href="javascript: void(0)"
+      id="switch-language"
+      class="language-switch-button"
+      title="Switch language"
+      aria-label="Switch language"
+    >
+      <svg class="tool-toggle-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"></circle>
+        <path d="M3.5 12h17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+        <path d="M12 3.5c2.7 2.4 4.3 5.4 4.3 8.5S14.7 18.1 12 20.5c-2.7-2.4-4.3-5.4-4.3-8.5S9.3 5.9 12 3.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path>
+      </svg>
+    </a>
+  </div>
+
+  <%- js(['/js/langswitch.js']) %>
+<% } %>

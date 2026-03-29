@@ -10,6 +10,7 @@
   ]
 %>
 <div class="footer">
+  <% const defaultLanguage = oranges_default_language(); %>
   <div class="social">
     <ul>
       <% for (let item of theme.footer.social) { %>
@@ -29,17 +30,18 @@
   </div>
   <% for(let item of theme.footer.more){ %>
     <%
+      let footerMoreName = oranges_localize(item.name, defaultLanguage)
       footerMoreVars.forEach(i => {
-        if (item.name.includes(i.name)) {
-          item.name = item.name.replace(i.name, i.func)
+        if (footerMoreName.includes(i.name)) {
+          footerMoreName = footerMoreName.replace(i.name, i.func)
         }
       })
     %>
     <div class="footer-more">
       <% if (item.path) { %>
-        <a href="<%- item.path %>"><%- item.name %></a>
+        <a href="<%- item.path %>" data-l10n="<%- oranges_localize_attr_json(item.name) %>"><%- footerMoreName %></a>
       <% } else { %>
-        <%- item.name %>
+        <span data-l10n="<%- oranges_localize_attr_json(item.name) %>"><%- footerMoreName %></span>
       <% } %>  
     </div>
   <% } %>

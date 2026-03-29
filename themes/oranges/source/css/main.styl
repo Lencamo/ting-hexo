@@ -38,12 +38,51 @@ $theme-color = convert(hexo-config('themeColor'))
 }
 
 .navbar {
+  min-height: 3.6rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
   ul {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    width: max-content;
+    min-width: 100%;
+    min-height: 3.6rem;
+    padding: 0;
+    white-space: nowrap;
     li {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      flex: 0 0 auto;
       a {
+        position: relative;
+        z-index: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 2.6rem;
+        line-height: 2.6rem;
+        padding: 0 0.9rem;
+        border-radius: 4px;
         &:hover {
           &::after {
             background-color: $theme-color;
+            content: '';
+            position: absolute;
+            inset: 0;
+            left: 0;
+            bottom: 0;
+            width: auto;
+            height: auto;
+            opacity: 0.18;
+            border-radius: 4px;
+            z-index: -1;
           }
         }
       }
@@ -51,11 +90,78 @@ $theme-color = convert(hexo-config('themeColor'))
         a {
           &::after {
             background-color: $theme-color;
+            content: '';
+            position: absolute;
+            inset: 0;
+            left: 0;
+            bottom: 0;
+            width: auto;
+            height: auto;
+            opacity: 0.18;
+            border-radius: 4px;
+            z-index: -1;
           }
         }
       }
     }
   }
+}
+
+@media (max-width: 888px) {
+  .navbar {
+    overflow-x: visible;
+    overflow-y: visible;
+    ul {
+      width: 100%;
+      min-width: 0;
+      flex-wrap: wrap;
+      justify-content: center;
+      row-gap: 0.8rem;
+      white-space: normal;
+      li {
+        margin: 0 0.8rem;
+        a {
+          padding: 0 0.75rem;
+        }
+      }
+    }
+  }
+}
+
+.header {
+
+  box-sizing: border-box;
+}
+
+.avatar .nickname {
+  min-height: 5.4rem;
+}
+
+.avatar .nickname a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.8rem;
+  line-height: 2.8rem;
+  white-space: nowrap;
+}
+
+.language-switch-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-a);
+  transition: all 0.2s ease;
+  &:hover {
+    color: var(--color-text-a-active);
+  }
+}
+
+.tool-toggle-icon {
+  width: 1.65rem;
+  height: 1.65rem;
+  display: block;
+  stroke-width: 1.9;
 }
 
 .markdown-body h1 .headerlink::before,

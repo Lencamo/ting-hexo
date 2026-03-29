@@ -1,4 +1,5 @@
 <div class="container index">
+  <% const defaultLanguage = oranges_default_language(); %>
   <div class="post-list">
     <!-- 遍历渲染文章 -->
     <% page.posts.forEach(function(item) { %>
@@ -8,12 +9,12 @@
           <a href="<%- url_for(item.path) %>">
             <% if(item.title !== "") { %>
               <% if (item.top) { %>
-                <span><span title="<%= __('pinned') %>" class="icon iconfont icon-pin-top post-top"></span><%- item.title %></span>
+                <span><span title="<%= oranges_translate('pinned', defaultLanguage) %>" data-i18n-key="pinned" data-i18n-attr="title" class="icon iconfont icon-pin-top post-top"></span><%- item.title %></span>
               <% } else { %>
                 <span><%- item.title %></span>
               <% } %>
             <% } else { %>
-              <span>untitled</span>
+              <span data-i18n-key="untitled"><%= oranges_translate('untitled', defaultLanguage) %></span>
             <% } %>
           </a>
         </div>
